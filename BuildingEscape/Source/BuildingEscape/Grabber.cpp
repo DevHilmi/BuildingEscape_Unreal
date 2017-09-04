@@ -1,6 +1,7 @@
 // Copyright Hilmi Ilyas Rizaldi 2017
 
 #include "Grabber.h"
+#include "DrawDebugHelpers.h"
 
 #define OUT
 
@@ -39,9 +40,24 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	);
 
 	// TODO Log out to test
-	FString ViewPointLocation = PlayerViewPointLocation.ToString();
-	FString ViewPointRotation = PlayerViewPointRotation.ToString();
-	UE_LOG(LogTemp, Warning, TEXT("Location is : %s Rotation: %s"), *ViewPointLocation, *ViewPointRotation)
+	//FString ViewPointLocation = PlayerViewPointLocation.ToString();
+	//FString ViewPointRotation = PlayerViewPointRotation.ToString();
+	//UE_LOG(LogTemp, Warning, TEXT("Location is : %s Rotation: %s"), *ViewPointLocation, *ViewPointRotation)
+
+	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
+
+	// Draw a red trace 
+
+	DrawDebugLine(
+		GetWorld(),
+		PlayerViewPointLocation,
+		LineTraceEnd,
+		FColor(255, 0, 0),
+		false,
+		0.f,
+		0.f,
+		10.f
+	);
 
 	// Ray-cast out to reach distance
 
